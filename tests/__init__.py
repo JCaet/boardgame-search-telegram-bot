@@ -1,1 +1,1 @@
-"""Tests for BGG Search Telegram Bot."""
+"""Tests for Board Game Search Telegram Bot."""

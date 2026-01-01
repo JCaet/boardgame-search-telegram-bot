@@ -1,4 +1,4 @@
-# BGG Search Telegram Bot
+# Board Game Search Telegram Bot
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
@@ -8,7 +8,7 @@ A Telegram bot that allows users to search for board games on [BoardGameGeek](ht
 
 ## Features
 
-- 🔍 **Inline Search**: Type `@botname <game>` in any chat to search BGG
+- 🔍 **Inline Search**: Type `@botname <game>` in any chat to search BoardGameGeek
 - 🖼️ **Thumbnails**: See game images in search results  
 - 🔗 **Quick Share**: Tap a result to share a formatted link
 
@@ -23,8 +23,8 @@ A Telegram bot that allows users to search for board games on [BoardGameGeek](ht
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/bgg-search-telegram-bot.git
-cd bgg-search-telegram-bot
+git clone https://github.com/yourusername/boardgame-search-telegram-bot.git
+cd boardgame-search-telegram-bot
 
 # Install dependencies
 uv sync
@@ -75,10 +75,10 @@ uv run pre-commit install --hook-type commit-msg
 
 ```bash
 # Build
-docker build -t bgg-search-bot .
+docker build -t boardgame-search-bot .
 
 # Run
-docker run -d --env-file .env bgg-search-bot
+docker run -d --env-file .env boardgame-search-bot
 ```
 
 ## License

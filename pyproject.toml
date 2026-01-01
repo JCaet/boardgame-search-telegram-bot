@@ -1,5 +1,5 @@
 [project]
-name = "bgg-search-telegram-bot"
+name = "boardgame-search-telegram-bot"
 version = "0.1.0"
 description = "Telegram bot to search for games on BoardGameGeek and quickly link to them"
 readme = "README.md"

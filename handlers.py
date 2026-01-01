@@ -14,7 +14,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if update.message is None:
         return
     await update.message.reply_text(
-        "Hi! I'm a BGG Search Bot. Try searching for a game in any chat "
+        "Hi! I'm a Board Game Search Bot. Try searching for a game in any chat "
         "by typing my username followed by the game name!"
     )
 
