@@ -1,4 +1,6 @@
 import logging
+import time
+import traceback
 import uuid
 
 from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
@@ -7,6 +9,61 @@ from telegram.ext import ContextTypes
 from bgg_client import BGGClient
 
 logger = logging.getLogger(__name__)
+
+# Throttle: track last query time per user to debounce rapid typing
+_user_last_query: dict[int, float] = {}
+THROTTLE_SECONDS = 0.5  # Minimum time between queries per user
+_last_cleanup_time: float = 0
+CLEANUP_INTERVAL = 60  # Cleanup stale entries every 60 seconds
+STALE_ENTRY_AGE = 60  # Remove entries older than 60 seconds
+MIN_QUERY_LENGTH = 2  # Minimum characters required for search
+CANDIDATE_LIMIT = 40  # Max candidates for rating lookup (BGG allows 20 IDs/request)
+
+
+def _cleanup_throttle_dict() -> None:
+    """Remove stale entries from the throttle dictionary to prevent memory growth."""
+    global _last_cleanup_time
+    current_time = time.time()
+    if current_time - _last_cleanup_time < CLEANUP_INTERVAL:
+        return
+    _last_cleanup_time = current_time
+    cutoff = current_time - STALE_ENTRY_AGE
+    stale_users = [uid for uid, ts in _user_last_query.items() if ts < cutoff]
+    for uid in stale_users:
+        del _user_last_query[uid]
+    if stale_users:
+        logger.debug(f"Cleaned up {len(stale_users)} stale throttle entries")
+
+
+def _search_games(query: str, limit: int = 10) -> tuple[list[dict], dict[str, dict], int]:
+    """
+    Search for games and fetch details, sorted by Geek Rating.
+
+    Returns:
+        Tuple of (sorted results list, details map, total results count)
+    """
+    results = BGGClient.search_game(query)
+    if not results:
+        return [], {}, 0
+
+    total_count = len(results)
+
+    # Fetch ratings for candidates to ensure proper sorting
+    # (the API doesn't return results in rating order)
+    candidates = results[:CANDIDATE_LIMIT]
+
+    # Fetch details for thumbnails and ratings
+    game_ids = [g["id"] for g in candidates]
+    details_map = BGGClient.get_games_details(game_ids) if game_ids else {}
+
+    # Sort by Geek Rating (bayesaverage) in descending order
+    candidates.sort(
+        key=lambda g: details_map.get(g["id"], {}).get("bayesaverage", 0),
+        reverse=True,
+    )
+
+    # Return only the requested limit
+    return candidates[:limit], details_map, total_count
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -23,28 +80,90 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     """Send a message when the command /help is issued."""
     if update.message is None:
         return
-    await update.message.reply_text("Usage: Type @[bot_username] [game name] to search BGG.")
+    await update.message.reply_text(
+        "Usage:\n"
+        "• Inline: Type @[bot_username] [game name] in any chat\n"
+        "• Direct: Just send me a game name to search"
+    )
+
+
+async def search_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Handle direct message search. User sends a game name, bot replies with results."""
+    if update.message is None or update.message.text is None:
+        return
+
+    query = update.message.text.strip()
+
+    if len(query) < MIN_QUERY_LENGTH:
+        await update.message.reply_text(
+            f"Please enter at least {MIN_QUERY_LENGTH} characters to search."
+        )
+        return
+
+    logger.info(f"Direct message search for: {query}")
+
+    try:
+        results, _, total_count = _search_games(query, limit=10)
+
+        if not results:
+            await update.message.reply_text(f"No games found for '{query}'.")
+            return
+
+        # Format response (show top 10)
+        response_lines = [f"🎲 <b>Search results for '{query}':</b>\n"]
+        for i, game in enumerate(results[:10], 1):
+            response_lines.append(
+                f"{i}. <a href='{game['url']}'>{game['name']}</a> ({game['year']})"
+            )
+
+        # Add "see more on BGG" link if there are more results
+        if total_count > 10:
+            from urllib.parse import quote
+
+            bgg_search_url = f"https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q={quote(query)}"
+            response_lines.append(
+                f"\n<i>Showing 10 of {total_count} results.</i> "
+                f"<a href='{bgg_search_url}'>See all on BGG →</a>"
+            )
+
+        await update.message.reply_text(
+            "\n".join(response_lines),
+            parse_mode="HTML",
+            disable_web_page_preview=True,
+        )
+    except Exception as e:
+        logger.error(f"Error during direct message search: {e}")
+        await update.message.reply_text("Something went wrong. Please try again.")
 
 
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle the inline query. This is called when you type @bot_name [query]"""
+    _cleanup_throttle_dict()  # Periodic cleanup to prevent memory growth
+    logger.debug("inline_query handler triggered")
     if update.inline_query is None:
+        logger.warning("update.inline_query is None")
         return
     query = update.inline_query.query
+    logger.debug(f"Received query: '{query}'")
 
-    if not query:
+    if not query or len(query) < MIN_QUERY_LENGTH:
+        logger.debug(f"Query too short or empty: '{query}'")
         return
+
+    # Throttle: skip if user queried recently (debounce effect)
+    user_id = update.inline_query.from_user.id
+    current_time = time.time()
+    last_query_time = _user_last_query.get(user_id, 0)
+    if current_time - last_query_time < THROTTLE_SECONDS:
+        logger.debug(f"Throttled query from user {user_id}")
+        return
+    _user_last_query[user_id] = current_time
 
     logger.info(f"Inline search for: {query}")
 
     try:
-        results = BGGClient.search_game(query)
-        # Limit to top 10 results for better performance
-        results = results[:10]
-
-        # Batch fetch details (thumbnails) for all results
-        game_ids = [g["id"] for g in results]
-        details_map = BGGClient.get_games_details(game_ids) if game_ids else {}
+        results, details_map, _ = _search_games(query, limit=10)
+        logger.debug(f"Search returned {len(results)} results")
 
         articles = []
         for game in results:
@@ -69,3 +188,4 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         await update.inline_query.answer(articles, cache_time=300)
     except Exception as e:
         logger.error(f"Error during inline query: {e}")
+        logger.error(traceback.format_exc())

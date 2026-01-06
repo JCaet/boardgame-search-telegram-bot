@@ -2,7 +2,13 @@ import logging
 import os
 
 from dotenv import load_dotenv
-from telegram.ext import ApplicationBuilder, CommandHandler, InlineQueryHandler
+from telegram.ext import (
+    ApplicationBuilder,
+    CommandHandler,
+    InlineQueryHandler,
+    MessageHandler,
+    filters,
+)
 
 import handlers
 
@@ -31,6 +37,9 @@ def main() -> None:
     application.add_handler(CommandHandler("start", handlers.start))
     application.add_handler(CommandHandler("help", handlers.help_command))
     application.add_handler(InlineQueryHandler(handlers.inline_query))
+    application.add_handler(
+        MessageHandler(filters.TEXT & ~filters.COMMAND, handlers.search_message)
+    )
 
     logger.info("Bot started...")
     application.run_polling()

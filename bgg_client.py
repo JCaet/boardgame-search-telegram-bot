@@ -58,25 +58,34 @@ class BGGClient:
         if not game_ids:
             return {}
 
-        params: dict[str, str | int] = {"id": ",".join(game_ids), "stats": 1}
-        response = requests.get(
-            f"{BGGClient.BASE_URL}/thing", params=params, headers=BGGClient._get_headers()
-        )
-        response.raise_for_status()
-
-        root = etree.fromstring(response.content)
         results: dict[str, dict[str, str | None]] = {}
 
-        for item in root.xpath("//item"):
-            game_id: str = item.get("id", "")
-            thumbnail = item.xpath("thumbnail/text()")
-            image = item.xpath("image/text()")
-            description = item.xpath("description/text()")
+        # BGG API has a limit on IDs per request, batch into chunks
+        batch_size = 20
+        for i in range(0, len(game_ids), batch_size):
+            batch_ids = game_ids[i : i + batch_size]
+            params: dict[str, str | int] = {"id": ",".join(batch_ids), "stats": 1}
+            response = requests.get(
+                f"{BGGClient.BASE_URL}/thing", params=params, headers=BGGClient._get_headers()
+            )
+            response.raise_for_status()
 
-            results[game_id] = {
-                "thumbnail": str(thumbnail[0]) if thumbnail else None,
-                "image": str(image[0]) if image else None,
-                "description": str(description[0]) if description else "",
-            }
+            root = etree.fromstring(response.content)
+
+            for item in root.xpath("//item"):
+                game_id: str = item.get("id", "")
+                thumbnail = item.xpath("thumbnail/text()")
+                image = item.xpath("image/text()")
+                description = item.xpath("description/text()")
+                # Extract Geek Rating (bayesaverage) for sorting
+                bayesaverage_nodes = item.xpath("statistics/ratings/bayesaverage/@value")
+                bayesaverage = float(bayesaverage_nodes[0]) if bayesaverage_nodes else 0.0
+
+                results[game_id] = {
+                    "thumbnail": str(thumbnail[0]) if thumbnail else None,
+                    "image": str(image[0]) if image else None,
+                    "description": str(description[0]) if description else "",
+                    "bayesaverage": bayesaverage,
+                }
 
         return results
