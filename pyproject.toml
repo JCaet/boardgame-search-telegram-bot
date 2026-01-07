@@ -9,10 +9,11 @@ authors = [
     {name = "João Caetano", email = "joaomartinscaetano@proton.me"},
 ]
 dependencies = [
+    "httpx>=0.28.1",
     "lxml>=6.0.2",
     "python-dotenv>=1.2.1",
     "python-telegram-bot>=22.5",
-    "requests>=2.32.5",
+    "tornado>=6.5.4",
 ]
 
 [tool.semantic_release]
