@@ -1,6 +1,6 @@
 import os
 
-import requests
+import httpx
 from dotenv import load_dotenv
 from lxml import etree
 
@@ -19,13 +19,16 @@ class BGGClient:
         return headers
 
     @staticmethod
-    def search_game(query: str) -> list[dict]:
+    async def search_game(query: str) -> list[dict]:
         """Search for games by name."""
         params = {"query": query, "type": "boardgame"}
-        response = requests.get(
-            f"{BGGClient.BASE_URL}/search", params=params, headers=BGGClient._get_headers()
-        )
-        response.raise_for_status()
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"{BGGClient.BASE_URL}/search",
+                params=params,
+                headers=BGGClient._get_headers(),
+            )
+            response.raise_for_status()
 
         root = etree.fromstring(response.content)
         games: list[dict[str, str | None]] = []
@@ -47,13 +50,13 @@ class BGGClient:
         return games
 
     @staticmethod
-    def get_game_details(game_id: str) -> dict | None:
+    async def get_game_details(game_id: str) -> dict | None:
         """Fetch thumbnail and other details for a specific game."""
-        details = BGGClient.get_games_details([game_id])
+        details = await BGGClient.get_games_details([game_id])
         return details.get(game_id)
 
     @staticmethod
-    def get_games_details(game_ids: list[str]) -> dict[str, dict[str, str | None]]:
+    async def get_games_details(game_ids: list[str]) -> dict[str, dict[str, str | None]]:
         """Fetch thumbnail and other details for multiple games at once."""
         if not game_ids:
             return {}
@@ -62,13 +65,16 @@ class BGGClient:
 
         # BGG API has a limit on IDs per request, batch into chunks
         batch_size = 20
-        for i in range(0, len(game_ids), batch_size):
-            batch_ids = game_ids[i : i + batch_size]
-            params: dict[str, str | int] = {"id": ",".join(batch_ids), "stats": 1}
-            response = requests.get(
-                f"{BGGClient.BASE_URL}/thing", params=params, headers=BGGClient._get_headers()
-            )
-            response.raise_for_status()
+        async with httpx.AsyncClient() as client:
+            for i in range(0, len(game_ids), batch_size):
+                batch_ids = game_ids[i : i + batch_size]
+                params: dict[str, str | int] = {"id": ",".join(batch_ids), "stats": 1}
+                response = await client.get(
+                    f"{BGGClient.BASE_URL}/thing",
+                    params=params,
+                    headers=BGGClient._get_headers(),
+                )
+                response.raise_for_status()
 
             root = etree.fromstring(response.content)
 

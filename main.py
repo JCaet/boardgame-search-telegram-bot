@@ -41,8 +41,18 @@ def main() -> None:
         MessageHandler(filters.TEXT & ~filters.COMMAND, handlers.search_message)
     )
 
-    logger.info("Bot started...")
-    application.run_polling()
+    if webhook_url := os.getenv("WEBHOOK_URL"):
+        port = int(os.getenv("PORT", "8080"))
+        logger.info(f"Starting webhook on port {port}...")
+        application.run_webhook(
+            listen="0.0.0.0",
+            port=port,
+            url_path=token,
+            webhook_url=f"{webhook_url}/{token}",
+        )
+    else:
+        logger.info("Bot started with polling...")
+        application.run_polling()
 
 
 if __name__ == "__main__":

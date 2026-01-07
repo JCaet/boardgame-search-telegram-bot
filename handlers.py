@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import time
 import traceback
@@ -12,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Throttle: track last query time per user to debounce rapid typing
 _user_last_query: dict[int, float] = {}
+_throttle_lock = asyncio.Lock()  # Lock to protect shared throttle state
 THROTTLE_SECONDS = 0.5  # Minimum time between queries per user
 _last_cleanup_time: float = 0
 CLEANUP_INTERVAL = 60  # Cleanup stale entries every 60 seconds
@@ -20,7 +22,7 @@ MIN_QUERY_LENGTH = 2  # Minimum characters required for search
 CANDIDATE_LIMIT = 40  # Max candidates for rating lookup (BGG allows 20 IDs/request)
 
 
-def _cleanup_throttle_dict() -> None:
+async def _cleanup_throttle_dict() -> None:
     """Remove stale entries from the throttle dictionary to prevent memory growth."""
     global _last_cleanup_time
     current_time = time.time()
@@ -28,21 +30,22 @@ def _cleanup_throttle_dict() -> None:
         return
     _last_cleanup_time = current_time
     cutoff = current_time - STALE_ENTRY_AGE
-    stale_users = [uid for uid, ts in _user_last_query.items() if ts < cutoff]
-    for uid in stale_users:
-        del _user_last_query[uid]
+    async with _throttle_lock:
+        stale_users = [uid for uid, ts in _user_last_query.items() if ts < cutoff]
+        for uid in stale_users:
+            del _user_last_query[uid]
     if stale_users:
         logger.debug(f"Cleaned up {len(stale_users)} stale throttle entries")
 
 
-def _search_games(query: str, limit: int = 10) -> tuple[list[dict], dict[str, dict], int]:
+async def _search_games(query: str, limit: int = 10) -> tuple[list[dict], dict[str, dict], int]:
     """
     Search for games and fetch details, sorted by Geek Rating.
 
     Returns:
         Tuple of (sorted results list, details map, total results count)
     """
-    results = BGGClient.search_game(query)
+    results = await BGGClient.search_game(query)
     if not results:
         return [], {}, 0
 
@@ -54,7 +57,7 @@ def _search_games(query: str, limit: int = 10) -> tuple[list[dict], dict[str, di
 
     # Fetch details for thumbnails and ratings
     game_ids = [g["id"] for g in candidates]
-    details_map = BGGClient.get_games_details(game_ids) if game_ids else {}
+    details_map = await BGGClient.get_games_details(game_ids) if game_ids else {}
 
     # Sort by Geek Rating (bayesaverage) in descending order
     candidates.sort(
@@ -81,6 +84,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     if update.message is None:
         return
     await update.message.reply_text(
+        "Se estás a ler isto és maricas\n\n"
         "Usage:\n"
         "• Inline: Type @[bot_username] [game name] in any chat\n"
         "• Direct: Just send me a game name to search"
@@ -103,7 +107,7 @@ async def search_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     logger.info(f"Direct message search for: {query}")
 
     try:
-        results, _, total_count = _search_games(query, limit=10)
+        results, _, total_count = await _search_games(query, limit=10)
 
         if not results:
             await update.message.reply_text(f"No games found for '{query}'.")
@@ -138,7 +142,7 @@ async def search_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle the inline query. This is called when you type @bot_name [query]"""
-    _cleanup_throttle_dict()  # Periodic cleanup to prevent memory growth
+    await _cleanup_throttle_dict()  # Periodic cleanup to prevent memory growth
     logger.debug("inline_query handler triggered")
     if update.inline_query is None:
         logger.warning("update.inline_query is None")
@@ -153,16 +157,17 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     # Throttle: skip if user queried recently (debounce effect)
     user_id = update.inline_query.from_user.id
     current_time = time.time()
-    last_query_time = _user_last_query.get(user_id, 0)
-    if current_time - last_query_time < THROTTLE_SECONDS:
-        logger.debug(f"Throttled query from user {user_id}")
-        return
-    _user_last_query[user_id] = current_time
+    async with _throttle_lock:
+        last_query_time = _user_last_query.get(user_id, 0)
+        if current_time - last_query_time < THROTTLE_SECONDS:
+            logger.debug(f"Throttled query from user {user_id}")
+            return
+        _user_last_query[user_id] = current_time
 
     logger.info(f"Inline search for: {query}")
 
     try:
-        results, details_map, _ = _search_games(query, limit=10)
+        results, details_map, _ = await _search_games(query, limit=10)
         logger.debug(f"Search returned {len(results)} results")
 
         articles = []
