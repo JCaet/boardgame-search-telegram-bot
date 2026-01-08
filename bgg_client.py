@@ -56,12 +56,12 @@ class BGGClient:
         return details.get(game_id)
 
     @staticmethod
-    async def get_games_details(game_ids: list[str]) -> dict[str, dict[str, str | None]]:
+    async def get_games_details(game_ids: list[str]) -> dict[str, dict[str, str | float | None]]:
         """Fetch thumbnail and other details for multiple games at once."""
         if not game_ids:
             return {}
 
-        results: dict[str, dict[str, str | None]] = {}
+        results: dict[str, dict[str, str | float | None]] = {}
 
         # BGG API has a limit on IDs per request, batch into chunks
         batch_size = 20

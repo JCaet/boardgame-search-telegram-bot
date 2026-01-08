@@ -61,7 +61,7 @@ async def _search_games(query: str, limit: int = 10) -> tuple[list[dict], dict[s
 
     # Sort by Geek Rating (bayesaverage) in descending order
     candidates.sort(
-        key=lambda g: details_map.get(g["id"], {}).get("bayesaverage", 0),
+        key=lambda g: float(details_map.get(g["id"], {}).get("bayesaverage") or 0),
         reverse=True,
     )
 
