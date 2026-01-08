@@ -12,6 +12,9 @@ jobs:
   release:
     runs-on: ubuntu-latest
     concurrency: release
+    outputs:
+      released: ${{ steps.semantic.outputs.released }}
+      version: ${{ steps.semantic.outputs.version }}
 
     steps:
       - uses: actions/checkout@v6
@@ -27,6 +30,7 @@ jobs:
         run: pip install python-semantic-release
 
       - name: Run semantic-release
+        id: semantic
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: semantic-release version --changelog

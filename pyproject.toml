@@ -20,7 +20,6 @@ dependencies = [
 version_toml = ["pyproject.toml:project.version"]
 branch = "main"
 upload_to_release = true
-build_command = "uv build"
 
 [tool.semantic_release.changelog]
 exclude_commit_patterns = []
