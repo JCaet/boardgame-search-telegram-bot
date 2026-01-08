@@ -32,7 +32,7 @@ jobs:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v1
+        uses: astral-sh/setup-uv@v7
 
       - name: Build and Push Container
         run: |
