@@ -1,0 +1,436 @@
+﻿Deploy	Set up job	´╗┐2026-01-11T15:48:49.3137847Z Current runner version: '2.330.0'
+Deploy	Set up job	2026-01-11T15:48:49.3165525Z ##[group]Runner Image Provisioner
+Deploy	Set up job	2026-01-11T15:48:49.3166745Z Hosted Compute Agent
+Deploy	Set up job	2026-01-11T15:48:49.3167560Z Version: 20251211.462
+Deploy	Set up job	2026-01-11T15:48:49.3168440Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+Deploy	Set up job	2026-01-11T15:48:49.3169476Z Build Date: 2025-12-11T16:28:49Z
+Deploy	Set up job	2026-01-11T15:48:49.3170512Z Worker ID: ***bcab1fe5-9af9-4c39-b139-58ed6fab3cf4***
+Deploy	Set up job	2026-01-11T15:48:49.3171471Z ##[endgroup]
+Deploy	Set up job	2026-01-11T15:48:49.3172324Z ##[group]Operating System
+Deploy	Set up job	2026-01-11T15:48:49.3173109Z Ubuntu
+Deploy	Set up job	2026-01-11T15:48:49.3173829Z 24.04.3
+Deploy	Set up job	2026-01-11T15:48:49.3174490Z LTS
+Deploy	Set up job	2026-01-11T15:48:49.3175512Z ##[endgroup]
+Deploy	Set up job	2026-01-11T15:48:49.3176315Z ##[group]Runner Image
+Deploy	Set up job	2026-01-11T15:48:49.3177169Z Image: ubuntu-24.04
+Deploy	Set up job	2026-01-11T15:48:49.3177902Z Version: 20260105.202.1
+Deploy	Set up job	2026-01-11T15:48:49.3179289Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260105.202/images/ubuntu/Ubuntu2404-Readme.md
+Deploy	Set up job	2026-01-11T15:48:49.3181020Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260105.202
+Deploy	Set up job	2026-01-11T15:48:49.3182420Z ##[endgroup]
+Deploy	Set up job	2026-01-11T15:48:49.3183953Z ##[group]GITHUB_TOKEN Permissions
+Deploy	Set up job	2026-01-11T15:48:49.3186216Z Contents: read
+Deploy	Set up job	2026-01-11T15:48:49.3187008Z Metadata: read
+Deploy	Set up job	2026-01-11T15:48:49.3187841Z ##[endgroup]
+Deploy	Set up job	2026-01-11T15:48:49.3190064Z Secret source: Actions
+Deploy	Set up job	2026-01-11T15:48:49.3191116Z Prepare workflow directory
+Deploy	Set up job	2026-01-11T15:48:49.3924657Z Prepare all required actions
+Deploy	Set up job	2026-01-11T15:48:49.3981879Z Getting action download info
+Deploy	Set up job	2026-01-11T15:48:49.7189074Z Download action repository 'actions/checkout@v6' (SHA:8e8c483db84b4bee98b60c0593521ed34d9990e8)
+Deploy	Set up job	2026-01-11T15:48:49.8092776Z Download action repository 'google-github-actions/auth@v3' (SHA:7c6bc770dae815cd3e89ee6cdf493a5fab2cc093)
+Deploy	Set up job	2026-01-11T15:48:50.0616839Z Download action repository 'astral-sh/setup-uv@v7' (SHA:61cb8a9741eeb8a550a1b8544337180c0fc8476b)
+Deploy	Set up job	2026-01-11T15:48:50.4035038Z Download action repository 'google-github-actions/deploy-cloudrun@v3' (SHA:2028e2d7d30a78c6910e0632e48dd561b064884d)
+Deploy	Set up job	2026-01-11T15:48:50.8430555Z Complete job name: Deploy
+Deploy	Checkout	´╗┐2026-01-11T15:48:50.9271880Z ##[group]Run actions/checkout@v6
+Deploy	Checkout	2026-01-11T15:48:50.9273766Z with:
+Deploy	Checkout	2026-01-11T15:48:50.9275124Z   repository: JCaet/boardgame-search-telegram-bot
+Deploy	Checkout	2026-01-11T15:48:50.9277322Z   token: ***
+Deploy	Checkout	2026-01-11T15:48:50.9278522Z   ssh-strict: true
+Deploy	Checkout	2026-01-11T15:48:50.9279801Z   ssh-user: git
+Deploy	Checkout	2026-01-11T15:48:50.9281049Z   persist-credentials: true
+Deploy	Checkout	2026-01-11T15:48:50.9282485Z   clean: true
+Deploy	Checkout	2026-01-11T15:48:50.9283756Z   sparse-checkout-cone-mode: true
+Deploy	Checkout	2026-01-11T15:48:50.9285347Z   fetch-depth: 1
+Deploy	Checkout	2026-01-11T15:48:50.9286581Z   fetch-tags: false
+Deploy	Checkout	2026-01-11T15:48:50.9287939Z   show-progress: true
+Deploy	Checkout	2026-01-11T15:48:50.9289186Z   lfs: false
+Deploy	Checkout	2026-01-11T15:48:50.9290463Z   submodules: false
+Deploy	Checkout	2026-01-11T15:48:50.9291781Z   set-safe-directory: true
+Deploy	Checkout	2026-01-11T15:48:50.9293434Z env:
+Deploy	Checkout	2026-01-11T15:48:50.9355490Z   PROJECT_ID: ***
+Deploy	Checkout	2026-01-11T15:48:50.9357738Z   SERVICE_NAME: boardgame-search-bot
+Deploy	Checkout	2026-01-11T15:48:50.9359531Z   REGION: us-central1
+Deploy	Checkout	2026-01-11T15:48:50.9360682Z ##[endgroup]
+Deploy	Checkout	2026-01-11T15:48:51.0322036Z Syncing repository: JCaet/boardgame-search-telegram-bot
+Deploy	Checkout	2026-01-11T15:48:51.0325590Z ##[group]Getting Git version info
+Deploy	Checkout	2026-01-11T15:48:51.0327807Z Working directory is '/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot'
+Deploy	Checkout	2026-01-11T15:48:51.0330770Z [command]/usr/bin/git version
+Deploy	Checkout	2026-01-11T15:48:51.0356763Z git version 2.52.0
+Deploy	Checkout	2026-01-11T15:48:51.0411994Z ##[endgroup]
+Deploy	Checkout	2026-01-11T15:48:51.0426986Z Temporarily overriding HOME='/home/runner/work/_temp/ade33146-64a8-4f0b-ba7d-281fe4010fb4' before making global git config changes
+Deploy	Checkout	2026-01-11T15:48:51.0432464Z Adding repository directory to the temporary git global config as a safe directory
+Deploy	Checkout	2026-01-11T15:48:51.0438019Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot
+Deploy	Checkout	2026-01-11T15:48:51.0473214Z Deleting the contents of '/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot'
+Deploy	Checkout	2026-01-11T15:48:51.0479171Z ##[group]Initializing the repository
+Deploy	Checkout	2026-01-11T15:48:51.0483130Z [command]/usr/bin/git init /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot
+Deploy	Checkout	2026-01-11T15:48:51.0590101Z hint: Using 'master' as the name for the initial branch. This default branch name
+Deploy	Checkout	2026-01-11T15:48:51.0593157Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Deploy	Checkout	2026-01-11T15:48:51.0597087Z hint: to use in all of your new repositories, which will suppress this warning,
+Deploy	Checkout	2026-01-11T15:48:51.0600069Z hint: call:
+Deploy	Checkout	2026-01-11T15:48:51.0601828Z hint:
+Deploy	Checkout	2026-01-11T15:48:51.0603856Z hint: 	git config --global init.defaultBranch <name>
+Deploy	Checkout	2026-01-11T15:48:51.0606619Z hint:
+Deploy	Checkout	2026-01-11T15:48:51.0608973Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Deploy	Checkout	2026-01-11T15:48:51.0612517Z hint: 'development'. The just-created branch can be renamed via this command:
+Deploy	Checkout	2026-01-11T15:48:51.0614786Z hint:
+Deploy	Checkout	2026-01-11T15:48:51.0616164Z hint: 	git branch -m <name>
+Deploy	Checkout	2026-01-11T15:48:51.0617370Z hint:
+Deploy	Checkout	2026-01-11T15:48:51.0618874Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Deploy	Checkout	2026-01-11T15:48:51.0622896Z Initialized empty Git repository in /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git/
+Deploy	Checkout	2026-01-11T15:48:51.0627861Z [command]/usr/bin/git remote add origin https://github.com/JCaet/boardgame-search-telegram-bot
+Deploy	Checkout	2026-01-11T15:48:51.0666653Z ##[endgroup]
+Deploy	Checkout	2026-01-11T15:48:51.0670003Z ##[group]Disabling automatic garbage collection
+Deploy	Checkout	2026-01-11T15:48:51.0672914Z [command]/usr/bin/git config --local gc.auto 0
+Deploy	Checkout	2026-01-11T15:48:51.0702123Z ##[endgroup]
+Deploy	Checkout	2026-01-11T15:48:51.0705412Z ##[group]Setting up auth
+Deploy	Checkout	2026-01-11T15:48:51.0707765Z Removing SSH command configuration
+Deploy	Checkout	2026-01-11T15:48:51.0710914Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Deploy	Checkout	2026-01-11T15:48:51.0743348Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Deploy	Checkout	2026-01-11T15:48:51.1068610Z Removing HTTP extra header
+Deploy	Checkout	2026-01-11T15:48:51.1074724Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Deploy	Checkout	2026-01-11T15:48:51.1109329Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Deploy	Checkout	2026-01-11T15:48:51.1319654Z Removing includeIf entries pointing to credentials config files
+Deploy	Checkout	2026-01-11T15:48:51.1325174Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Deploy	Checkout	2026-01-11T15:48:51.1358687Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Deploy	Checkout	2026-01-11T15:48:51.1581857Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Deploy	Checkout	2026-01-11T15:48:51.1620788Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git.path /home/runner/work/_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Checkout	2026-01-11T15:48:51.1652288Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Checkout	2026-01-11T15:48:51.1680407Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Checkout	2026-01-11T15:48:51.1711855Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Checkout	2026-01-11T15:48:51.1739758Z ##[endgroup]
+Deploy	Checkout	2026-01-11T15:48:51.1742935Z ##[group]Fetching the repository
+Deploy	Checkout	2026-01-11T15:48:51.1750076Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +26d832bf807226ef6a3465d1fd5fb3e211c49593:refs/remotes/origin/main
+Deploy	Checkout	2026-01-11T15:48:51.3487411Z From https://github.com/JCaet/boardgame-search-telegram-bot
+Deploy	Checkout	2026-01-11T15:48:51.3489511Z  * [new ref]         26d832bf807226ef6a3465d1fd5fb3e211c49593 -> origin/main
+Deploy	Checkout	2026-01-11T15:48:51.3523562Z ##[endgroup]
+Deploy	Checkout	2026-01-11T15:48:51.3526989Z ##[group]Determining the checkout info
+Deploy	Checkout	2026-01-11T15:48:51.3530566Z ##[endgroup]
+Deploy	Checkout	2026-01-11T15:48:51.3532622Z [command]/usr/bin/git sparse-checkout disable
+Deploy	Checkout	2026-01-11T15:48:51.3574681Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Deploy	Checkout	2026-01-11T15:48:51.3609642Z ##[group]Checking out the ref
+Deploy	Checkout	2026-01-11T15:48:51.3612128Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Deploy	Checkout	2026-01-11T15:48:51.3683909Z Switched to a new branch 'main'
+Deploy	Checkout	2026-01-11T15:48:51.3688868Z branch 'main' set up to track 'origin/main'.
+Deploy	Checkout	2026-01-11T15:48:51.3695078Z ##[endgroup]
+Deploy	Checkout	2026-01-11T15:48:51.3736367Z [command]/usr/bin/git log -1 --format=%H
+Deploy	Checkout	2026-01-11T15:48:51.3758850Z 26d832bf807226ef6a3465d1fd5fb3e211c49593
+Deploy	Google Auth	´╗┐2026-01-11T15:48:51.4155058Z ##[group]Run google-github-actions/auth@v3
+Deploy	Google Auth	2026-01-11T15:48:51.4156664Z with:
+Deploy	Google Auth	2026-01-11T15:48:51.4191193Z   credentials_json: ***
+Deploy	Google Auth	2026-01-11T15:48:51.4192428Z   create_credentials_file: true
+Deploy	Google Auth	2026-01-11T15:48:51.4193681Z   export_environment_variables: true
+Deploy	Google Auth	2026-01-11T15:48:51.4194958Z   universe: googleapis.com
+Deploy	Google Auth	2026-01-11T15:48:51.4196321Z   cleanup_credentials: true
+Deploy	Google Auth	2026-01-11T15:48:51.4197514Z   access_token_lifetime: 3600s
+Deploy	Google Auth	2026-01-11T15:48:51.4199070Z   access_token_scopes: https://www.googleapis.com/auth/cloud-platform
+Deploy	Google Auth	2026-01-11T15:48:51.4200702Z   id_token_include_email: false
+Deploy	Google Auth	2026-01-11T15:48:51.4201875Z env:
+Deploy	Google Auth	2026-01-11T15:48:51.4202926Z   PROJECT_ID: ***
+Deploy	Google Auth	2026-01-11T15:48:51.4204254Z   SERVICE_NAME: boardgame-search-bot
+Deploy	Google Auth	2026-01-11T15:48:51.4205720Z   REGION: us-central1
+Deploy	Google Auth	2026-01-11T15:48:51.4206805Z ##[endgroup]
+Deploy	Google Auth	2026-01-11T15:48:51.5122725Z Created credentials file at "/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json"
+Deploy	Install uv	´╗┐2026-01-11T15:48:51.5457383Z ##[group]Run astral-sh/setup-uv@v7
+Deploy	Install uv	2026-01-11T15:48:51.5458662Z with:
+Deploy	Install uv	2026-01-11T15:48:51.5459682Z   activate-environment: false
+Deploy	Install uv	2026-01-11T15:48:51.5461614Z   working-directory: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot
+Deploy	Install uv	2026-01-11T15:48:51.5463905Z   github-token: ***
+Deploy	Install uv	2026-01-11T15:48:51.5464980Z   enable-cache: auto
+Deploy	Install uv	2026-01-11T15:48:51.5467388Z   cache-dependency-glob: **/*requirements*.txt
+Deploy	Install uv	**/*requirements*.in
+Deploy	Install uv	**/*constraints*.txt
+Deploy	Install uv	**/*constraints*.in
+Deploy	Install uv	**/pyproject.toml
+Deploy	Install uv	**/uv.lock
+Deploy	Install uv	**/*.py.lock
+Deploy	Install uv	
+Deploy	Install uv	2026-01-11T15:48:51.5469850Z   restore-cache: true
+Deploy	Install uv	2026-01-11T15:48:51.5470933Z   save-cache: true
+Deploy	Install uv	2026-01-11T15:48:51.5471994Z   prune-cache: true
+Deploy	Install uv	2026-01-11T15:48:51.5473078Z   cache-python: false
+Deploy	Install uv	2026-01-11T15:48:51.5474222Z   ignore-nothing-to-cache: false
+Deploy	Install uv	2026-01-11T15:48:51.5475735Z   ignore-empty-workdir: false
+Deploy	Install uv	2026-01-11T15:48:51.5476988Z   add-problem-matchers: true
+Deploy	Install uv	2026-01-11T15:48:51.5478203Z   resolution-strategy: highest
+Deploy	Install uv	2026-01-11T15:48:51.5479367Z env:
+Deploy	Install uv	2026-01-11T15:48:51.5480451Z   PROJECT_ID: ***
+Deploy	Install uv	2026-01-11T15:48:51.5481555Z   SERVICE_NAME: boardgame-search-bot
+Deploy	Install uv	2026-01-11T15:48:51.5482805Z   REGION: us-central1
+Deploy	Install uv	2026-01-11T15:48:51.5485380Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Install uv	2026-01-11T15:48:51.5489276Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Install uv	2026-01-11T15:48:51.5492938Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Install uv	2026-01-11T15:48:51.5495792Z   CLOUDSDK_CORE_PROJECT: ***
+Deploy	Install uv	2026-01-11T15:48:51.5497071Z   CLOUDSDK_PROJECT: ***
+Deploy	Install uv	2026-01-11T15:48:51.5498251Z   GCLOUD_PROJECT: ***
+Deploy	Install uv	2026-01-11T15:48:51.5499403Z   GCP_PROJECT: ***
+Deploy	Install uv	2026-01-11T15:48:51.5500581Z   GOOGLE_CLOUD_PROJECT: ***
+Deploy	Install uv	2026-01-11T15:48:51.5501711Z ##[endgroup]
+Deploy	Install uv	2026-01-11T15:48:51.6920996Z (node:2114) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Deploy	Install uv	2026-01-11T15:48:51.6926042Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Deploy	Install uv	2026-01-11T15:48:51.7040856Z Trying to find version for uv in: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/uv.toml
+Deploy	Install uv	2026-01-11T15:48:51.7046635Z Could not find file: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/uv.toml
+Deploy	Install uv	2026-01-11T15:48:51.7052287Z Trying to find version for uv in: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/pyproject.toml
+Deploy	Install uv	2026-01-11T15:48:51.7057872Z Could not determine uv version from uv.toml or pyproject.toml. Falling back to latest.
+Deploy	Install uv	2026-01-11T15:48:51.7062607Z Getting latest version from GitHub API...
+Deploy	Install uv	2026-01-11T15:48:51.9390411Z manifest-file not provided, reading from local file.
+Deploy	Install uv	2026-01-11T15:48:51.9446788Z manifest-file does not contain version 0.9.24, arch x86_64, platform unknown-linux-gnu. Falling back to GitHub releases.
+Deploy	Install uv	2026-01-11T15:48:51.9450115Z Downloading uv from "https://github.com/astral-sh/uv/releases/download/0.9.24/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+Deploy	Install uv	2026-01-11T15:48:52.2227024Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/80fcf669-bc92-41ef-953c-b7672e38e791 -f /home/runner/work/_temp/041de540-d695-4899-b2b4-ca887f71806b
+Deploy	Install uv	2026-01-11T15:48:52.6992732Z Added /home/runner/.local/bin to the path
+Deploy	Install uv	2026-01-11T15:48:52.6998070Z Added /opt/hostedtoolcache/uv/0.9.24/x86_64 to the path
+Deploy	Install uv	2026-01-11T15:48:52.6999741Z Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+Deploy	Install uv	2026-01-11T15:48:52.7002183Z Added /home/runner/work/_temp/uv-python-dir to the path
+Deploy	Install uv	2026-01-11T15:48:52.7026770Z Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+Deploy	Install uv	2026-01-11T15:48:52.7027733Z Successfully installed uv version 0.9.24
+Deploy	Install uv	2026-01-11T15:48:52.7869198Z Searching files using cache dependency glob: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/**/*requirements*.txt,/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/**/*requirements*.in,/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/**/*constraints*.txt,/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/**/*constraints*.in,/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/**/pyproject.toml,/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/**/uv.lock,/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/**/*.py.lock
+Deploy	Install uv	2026-01-11T15:48:52.8131017Z /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/pyproject.toml
+Deploy	Install uv	2026-01-11T15:48:52.8156747Z /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/uv.lock
+Deploy	Install uv	2026-01-11T15:48:52.8165395Z Found 2 files to hash.
+Deploy	Install uv	2026-01-11T15:48:52.8228232Z Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12.3-pruned-8b656a7940d1d8dcf6e1cbeb7531f2531bee494dd96f739c9d6ebe6c3221395a
+Deploy	Install uv	2026-01-11T15:48:52.9227562Z No GitHub Actions cache found for key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12.3-pruned-8b656a7940d1d8dcf6e1cbeb7531f2531bee494dd96f739c9d6ebe6c3221395a
+Deploy	Build and Push Container	´╗┐2026-01-11T15:48:52.9896854Z ##[group]Run gcloud auth configure-docker us-central1-docker.pkg.dev
+Deploy	Build and Push Container	2026-01-11T15:48:52.9897612Z [36;1mgcloud auth configure-docker us-central1-docker.pkg.dev[0m
+Deploy	Build and Push Container	2026-01-11T15:48:52.9898118Z [36;1muv lock[0m
+Deploy	Build and Push Container	2026-01-11T15:48:52.9898850Z [36;1mdocker build -t us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$SERVICE_NAME:26d832bf807226ef6a3465d1fd5fb3e211c49593 .[0m
+Deploy	Build and Push Container	2026-01-11T15:48:52.9900242Z [36;1mdocker push us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$SERVICE_NAME:26d832bf807226ef6a3465d1fd5fb3e211c49593[0m
+Deploy	Build and Push Container	2026-01-11T15:48:52.9938814Z shell: /usr/bin/bash -e ***0***
+Deploy	Build and Push Container	2026-01-11T15:48:52.9939243Z env:
+Deploy	Build and Push Container	2026-01-11T15:48:52.9939597Z   PROJECT_ID: ***
+Deploy	Build and Push Container	2026-01-11T15:48:52.9939954Z   SERVICE_NAME: boardgame-search-bot
+Deploy	Build and Push Container	2026-01-11T15:48:52.9940357Z   REGION: us-central1
+Deploy	Build and Push Container	2026-01-11T15:48:52.9941134Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Build and Push Container	2026-01-11T15:48:52.9942371Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Build and Push Container	2026-01-11T15:48:52.9943482Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Build and Push Container	2026-01-11T15:48:52.9944269Z   CLOUDSDK_CORE_PROJECT: ***
+Deploy	Build and Push Container	2026-01-11T15:48:52.9944683Z   CLOUDSDK_PROJECT: ***
+Deploy	Build and Push Container	2026-01-11T15:48:52.9945065Z   GCLOUD_PROJECT: ***
+Deploy	Build and Push Container	2026-01-11T15:48:52.9945711Z   GCP_PROJECT: ***
+Deploy	Build and Push Container	2026-01-11T15:48:52.9946101Z   GOOGLE_CLOUD_PROJECT: ***
+Deploy	Build and Push Container	2026-01-11T15:48:52.9946561Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+Deploy	Build and Push Container	2026-01-11T15:48:52.9947083Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+Deploy	Build and Push Container	2026-01-11T15:48:52.9947502Z ##[endgroup]
+Deploy	Build and Push Container	2026-01-11T15:48:59.8460780Z Adding credentials for: us-central1-docker.pkg.dev
+Deploy	Build and Push Container	2026-01-11T15:48:59.8461991Z After update, the following will be written to your Docker config file located 
+Deploy	Build and Push Container	2026-01-11T15:48:59.8462947Z at [/home/runner/.docker/config.json]:
+Deploy	Build and Push Container	2026-01-11T15:48:59.8463654Z  ***
+Deploy	Build and Push Container	2026-01-11T15:48:59.8464126Z   "credHelpers": ***
+Deploy	Build and Push Container	2026-01-11T15:48:59.8464681Z     "us-central1-docker.pkg.dev": "gcloud"
+Deploy	Build and Push Container	2026-01-11T15:48:59.8465463Z   ***
+Deploy	Build and Push Container	2026-01-11T15:48:59.8466002Z ***
+Deploy	Build and Push Container	2026-01-11T15:48:59.8466222Z 
+Deploy	Build and Push Container	2026-01-11T15:48:59.8466464Z Do you want to continue (Y/n)?  
+Deploy	Build and Push Container	2026-01-11T15:48:59.8631479Z Docker configuration file updated.
+Deploy	Build and Push Container	2026-01-11T15:49:00.3068295Z Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Deploy	Build and Push Container	2026-01-11T15:49:00.3094851Z Resolved 38 packages in 0.55ms
+Deploy	Build and Push Container	2026-01-11T15:49:00.8748271Z #0 building with "default" instance using docker driver
+Deploy	Build and Push Container	2026-01-11T15:49:00.8748800Z 
+Deploy	Build and Push Container	2026-01-11T15:49:00.8749050Z #1 [internal] load build definition from Dockerfile
+Deploy	Build and Push Container	2026-01-11T15:49:00.8749512Z #1 transferring dockerfile: 336B done
+Deploy	Build and Push Container	2026-01-11T15:49:00.8749855Z #1 DONE 0.0s
+Deploy	Build and Push Container	2026-01-11T15:49:00.8750014Z 
+Deploy	Build and Push Container	2026-01-11T15:49:00.8750227Z #2 [auth] library/python:pull token for registry-1.docker.io
+Deploy	Build and Push Container	2026-01-11T15:49:00.8750634Z #2 DONE 0.0s
+Deploy	Build and Push Container	2026-01-11T15:49:00.8750816Z 
+Deploy	Build and Push Container	2026-01-11T15:49:00.8751044Z #3 [internal] load metadata for docker.io/library/python:3.12-slim
+Deploy	Build and Push Container	2026-01-11T15:49:00.9035075Z #3 ...
+Deploy	Build and Push Container	2026-01-11T15:49:00.9035529Z 
+Deploy	Build and Push Container	2026-01-11T15:49:00.9035788Z #4 [internal] load metadata for ghcr.io/astral-sh/uv:latest
+Deploy	Build and Push Container	2026-01-11T15:49:00.9036253Z #4 DONE 0.3s
+Deploy	Build and Push Container	2026-01-11T15:49:01.0321453Z 
+Deploy	Build and Push Container	2026-01-11T15:49:01.0322312Z #3 [internal] load metadata for docker.io/library/python:3.12-slim
+Deploy	Build and Push Container	2026-01-11T15:49:01.0323245Z #3 DONE 0.4s
+Deploy	Build and Push Container	2026-01-11T15:49:01.1543105Z 
+Deploy	Build and Push Container	2026-01-11T15:49:01.1543738Z #5 [internal] load .dockerignore
+Deploy	Build and Push Container	2026-01-11T15:49:01.1544478Z #5 transferring context: 2B done
+Deploy	Build and Push Container	2026-01-11T15:49:01.1544943Z #5 DONE 0.0s
+Deploy	Build and Push Container	2026-01-11T15:49:01.1545103Z 
+Deploy	Build and Push Container	2026-01-11T15:49:01.1545533Z #6 [internal] load build context
+Deploy	Build and Push Container	2026-01-11T15:49:01.1545900Z #6 transferring context: 159.40kB done
+Deploy	Build and Push Container	2026-01-11T15:49:01.1546228Z #6 DONE 0.0s
+Deploy	Build and Push Container	2026-01-11T15:49:01.1546386Z 
+Deploy	Build and Push Container	2026-01-11T15:49:01.1546844Z #7 [stage-0 1/6] FROM docker.io/library/python:3.12-slim@sha256:a75662dfec8d90bd7161c91050be2e0a9b21d284f3b7a7253d5db25f7d583fb3
+Deploy	Build and Push Container	2026-01-11T15:49:01.1548138Z #7 resolve docker.io/library/python:3.12-slim@sha256:a75662dfec8d90bd7161c91050be2e0a9b21d284f3b7a7253d5db25f7d583fb3 done
+Deploy	Build and Push Container	2026-01-11T15:49:01.1548983Z #7 sha256:a75662dfec8d90bd7161c91050be2e0a9b21d284f3b7a7253d5db25f7d583fb3 10.37kB / 10.37kB done
+Deploy	Build and Push Container	2026-01-11T15:49:01.1549906Z #7 sha256:5dcd5ccefc085545c8dac26ccf4ee55a19f6e5641768565304fcee3c48688e48 1.75kB / 1.75kB done
+Deploy	Build and Push Container	2026-01-11T15:49:01.1550618Z #7 sha256:7c5aeff4dbf98bbd70c8fa5337d3ec3a37b070ef577b3aa7954ae34141010ae6 5.67kB / 5.67kB done
+Deploy	Build and Push Container	2026-01-11T15:49:01.1551332Z #7 sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff 6.29MB / 29.78MB 0.1s
+Deploy	Build and Push Container	2026-01-11T15:49:01.1552037Z #7 sha256:fe2d526e7d41df5bda23740a00f6b254c44f67ce9bfc9507b36fb77c3b4c38e8 0B / 1.29MB 0.1s
+Deploy	Build and Push Container	2026-01-11T15:49:01.1552729Z #7 sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e 0B / 12.11MB 0.1s
+Deploy	Build and Push Container	2026-01-11T15:49:01.2544308Z #7 sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff 18.87MB / 29.78MB 0.2s
+Deploy	Build and Push Container	2026-01-11T15:49:01.2545357Z #7 sha256:fe2d526e7d41df5bda23740a00f6b254c44f67ce9bfc9507b36fb77c3b4c38e8 1.29MB / 1.29MB 0.1s done
+Deploy	Build and Push Container	2026-01-11T15:49:01.2546188Z #7 sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e 10.49MB / 12.11MB 0.2s
+Deploy	Build and Push Container	2026-01-11T15:49:01.2546923Z #7 sha256:d7c2baa095fbf75d83cd43b216be2d72bef124518338e23288648addadb8ee18 250B / 250B 0.2s done
+Deploy	Build and Push Container	2026-01-11T15:49:01.3547808Z #7 sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff 22.02MB / 29.78MB 0.3s
+Deploy	Build and Push Container	2026-01-11T15:49:01.3548762Z #7 sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e 12.11MB / 12.11MB 0.2s done
+Deploy	Build and Push Container	2026-01-11T15:49:01.4628767Z #7 sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff 25.17MB / 29.78MB 0.4s
+Deploy	Build and Push Container	2026-01-11T15:49:01.5650406Z #7 sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff 29.78MB / 29.78MB 0.4s done
+Deploy	Build and Push Container	2026-01-11T15:49:01.5652551Z #7 extracting sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff
+Deploy	Build and Push Container	2026-01-11T15:49:01.8564366Z #7 ...
+Deploy	Build and Push Container	2026-01-11T15:49:01.8564680Z 
+Deploy	Build and Push Container	2026-01-11T15:49:01.8565158Z #8 FROM ghcr.io/astral-sh/uv:latest@sha256:816fdce3387ed2142e37d2e56e1b1b97ccc1ea87731ba199dc8a25c04e4997c5
+Deploy	Build and Push Container	2026-01-11T15:49:01.8566372Z #8 resolve ghcr.io/astral-sh/uv:latest@sha256:816fdce3387ed2142e37d2e56e1b1b97ccc1ea87731ba199dc8a25c04e4997c5 done
+Deploy	Build and Push Container	2026-01-11T15:49:01.8567804Z #8 sha256:816fdce3387ed2142e37d2e56e1b1b97ccc1ea87731ba199dc8a25c04e4997c5 2.19kB / 2.19kB done
+Deploy	Build and Push Container	2026-01-11T15:49:01.8569091Z #8 sha256:e4bc0bb4310505e7104f06430c0a2271a58f60a756a3b2c287bb409890081b2a 669B / 669B done
+Deploy	Build and Push Container	2026-01-11T15:49:01.8570387Z #8 sha256:55c23a83c4d04128bd12f2d2ff7cb793e47dc91e20cb987d537c3963522b6351 1.30kB / 1.30kB done
+Deploy	Build and Push Container	2026-01-11T15:49:01.8571756Z #8 sha256:e6040e18015132ec5d84db1866c517a616eff56e82e3c391aed7230d8ded313e 22.50MB / 22.50MB 0.3s done
+Deploy	Build and Push Container	2026-01-11T15:49:01.8573077Z #8 sha256:9f6813bb3661b8791d11d9856107e821ca3d88db2f8f433e3c08f480e24ea7b4 98B / 98B 0.3s done
+Deploy	Build and Push Container	2026-01-11T15:49:01.8574399Z #8 extracting sha256:e6040e18015132ec5d84db1866c517a616eff56e82e3c391aed7230d8ded313e 0.3s done
+Deploy	Build and Push Container	2026-01-11T15:49:01.8575767Z #8 extracting sha256:9f6813bb3661b8791d11d9856107e821ca3d88db2f8f433e3c08f480e24ea7b4 done
+Deploy	Build and Push Container	2026-01-11T15:49:01.8576653Z #8 DONE 0.8s
+Deploy	Build and Push Container	2026-01-11T15:49:01.8576933Z 
+Deploy	Build and Push Container	2026-01-11T15:49:01.8577686Z #7 [stage-0 1/6] FROM docker.io/library/python:3.12-slim@sha256:a75662dfec8d90bd7161c91050be2e0a9b21d284f3b7a7253d5db25f7d583fb3
+Deploy	Build and Push Container	2026-01-11T15:49:02.7033803Z #7 extracting sha256:02d7611c4eae219af91448a4720bdba036575d3bc0356cfe12774af85daa6aff 1.1s done
+Deploy	Build and Push Container	2026-01-11T15:49:02.7035150Z #7 extracting sha256:fe2d526e7d41df5bda23740a00f6b254c44f67ce9bfc9507b36fb77c3b4c38e8 0.1s
+Deploy	Build and Push Container	2026-01-11T15:49:02.8881688Z #7 extracting sha256:fe2d526e7d41df5bda23740a00f6b254c44f67ce9bfc9507b36fb77c3b4c38e8 0.1s done
+Deploy	Build and Push Container	2026-01-11T15:49:02.8883077Z #7 extracting sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e 0.1s
+Deploy	Build and Push Container	2026-01-11T15:49:03.3493669Z #7 extracting sha256:61a9f733534e478a7570aaf3a154be5b9302dcf474e1fe0a827d4b146543b40e 0.5s done
+Deploy	Build and Push Container	2026-01-11T15:49:03.3495674Z #7 extracting sha256:d7c2baa095fbf75d83cd43b216be2d72bef124518338e23288648addadb8ee18
+Deploy	Build and Push Container	2026-01-11T15:49:03.4558197Z #7 extracting sha256:d7c2baa095fbf75d83cd43b216be2d72bef124518338e23288648addadb8ee18 done
+Deploy	Build and Push Container	2026-01-11T15:49:03.4558841Z #7 DONE 2.3s
+Deploy	Build and Push Container	2026-01-11T15:49:03.4559298Z 
+Deploy	Build and Push Container	2026-01-11T15:49:03.4559441Z #9 [stage-0 2/6] WORKDIR /app
+Deploy	Build and Push Container	2026-01-11T15:49:03.4559753Z #9 DONE 0.0s
+Deploy	Build and Push Container	2026-01-11T15:49:03.4559905Z 
+Deploy	Build and Push Container	2026-01-11T15:49:03.4560142Z #10 [stage-0 3/6] COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+Deploy	Build and Push Container	2026-01-11T15:49:03.4560599Z #10 DONE 0.1s
+Deploy	Build and Push Container	2026-01-11T15:49:03.6179634Z 
+Deploy	Build and Push Container	2026-01-11T15:49:03.6180295Z #11 [stage-0 4/6] COPY pyproject.toml uv.lock ./
+Deploy	Build and Push Container	2026-01-11T15:49:03.6180928Z #11 DONE 0.0s
+Deploy	Build and Push Container	2026-01-11T15:49:03.6181099Z 
+Deploy	Build and Push Container	2026-01-11T15:49:03.6181275Z #12 [stage-0 5/6] RUN uv sync --frozen --no-dev
+Deploy	Build and Push Container	2026-01-11T15:49:03.7729642Z #12 0.305 Using CPython 3.12.12 interpreter at: /usr/local/bin/python3
+Deploy	Build and Push Container	2026-01-11T15:49:03.7730430Z #12 0.305 Creating virtual environment at: .venv
+Deploy	Build and Push Container	2026-01-11T15:49:03.9362600Z #12 0.346 Downloading lxml (5.0MiB)
+Deploy	Build and Push Container	2026-01-11T15:49:03.9363322Z #12 0.469  Downloaded lxml
+Deploy	Build and Push Container	2026-01-11T15:49:04.1603178Z #12 0.475 Prepared 11 packages in 165ms
+Deploy	Build and Push Container	2026-01-11T15:49:04.1605134Z #12 0.492 Installed 11 packages in 16ms
+Deploy	Build and Push Container	2026-01-11T15:49:04.1606472Z #12 0.492  + anyio==4.12.0
+Deploy	Build and Push Container	2026-01-11T15:49:04.1607431Z #12 0.492  + certifi==2025.11.12
+Deploy	Build and Push Container	2026-01-11T15:49:04.1608393Z #12 0.492  + h11==0.16.0
+Deploy	Build and Push Container	2026-01-11T15:49:04.1614788Z #12 0.492  + httpcore==1.0.9
+Deploy	Build and Push Container	2026-01-11T15:49:04.1615521Z #12 0.493  + httpx==0.28.1
+Deploy	Build and Push Container	2026-01-11T15:49:04.1616010Z #12 0.493  + idna==3.11
+Deploy	Build and Push Container	2026-01-11T15:49:04.1616457Z #12 0.493  + lxml==6.0.2
+Deploy	Build and Push Container	2026-01-11T15:49:04.1616935Z #12 0.493  + python-dotenv==1.2.1
+Deploy	Build and Push Container	2026-01-11T15:49:04.1617468Z #12 0.493  + python-telegram-bot==22.5
+Deploy	Build and Push Container	2026-01-11T15:49:04.1618034Z #12 0.493  + tornado==6.5.4
+Deploy	Build and Push Container	2026-01-11T15:49:04.1618562Z #12 0.493  + typing-extensions==4.15.0
+Deploy	Build and Push Container	2026-01-11T15:49:04.1619134Z #12 DONE 0.5s
+Deploy	Build and Push Container	2026-01-11T15:49:04.1619432Z 
+Deploy	Build and Push Container	2026-01-11T15:49:04.1619675Z #13 [stage-0 6/6] COPY *.py ./
+Deploy	Build and Push Container	2026-01-11T15:49:04.1620148Z #13 DONE 0.0s
+Deploy	Build and Push Container	2026-01-11T15:49:04.1620403Z 
+Deploy	Build and Push Container	2026-01-11T15:49:04.1620614Z #14 exporting to image
+Deploy	Build and Push Container	2026-01-11T15:49:04.1621129Z #14 exporting layers
+Deploy	Build and Push Container	2026-01-11T15:49:05.0178187Z #14 exporting layers 1.0s done
+Deploy	Build and Push Container	2026-01-11T15:49:05.0414494Z #14 writing image sha256:830acee9ffec677eccc40ac775c5d886175dff6ee220268ad389fc8964bd22f8 done
+Deploy	Build and Push Container	2026-01-11T15:49:05.0416613Z #14 naming to us-central1-docker.pkg.dev/***/cloud-run-source-deploy/boardgame-search-bot:26d832bf807226ef6a3465d1fd5fb3e211c49593 done
+Deploy	Build and Push Container	2026-01-11T15:49:05.0417890Z #14 DONE 1.0s
+Deploy	Build and Push Container	2026-01-11T15:49:06.3200572Z The push refers to repository [us-central1-docker.pkg.dev/***/cloud-run-source-deploy/boardgame-search-bot]
+Deploy	Build and Push Container	2026-01-11T15:49:06.3669660Z db5e4a9262bf: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3670290Z 47a2980decb5: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3670801Z aab97f22ac0f: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3671302Z ce5545f6b7d3: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3671769Z f4279397fcf4: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3672277Z 04b3d4cdb969: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3672763Z 70ea44b91986: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3673260Z 25825f276be6: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3673715Z 6a7f953ae30c: Preparing
+Deploy	Build and Push Container	2026-01-11T15:49:06.3674120Z 04b3d4cdb969: Waiting
+Deploy	Build and Push Container	2026-01-11T15:49:06.3674540Z 70ea44b91986: Waiting
+Deploy	Build and Push Container	2026-01-11T15:49:06.3674973Z 25825f276be6: Waiting
+Deploy	Build and Push Container	2026-01-11T15:49:06.3675611Z 6a7f953ae30c: Waiting
+Deploy	Build and Push Container	2026-01-11T15:49:06.9858024Z aab97f22ac0f: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:07.0610905Z f4279397fcf4: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:07.2230122Z db5e4a9262bf: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:07.9023744Z 04b3d4cdb969: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:07.9628737Z 25825f276be6: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:07.9656622Z 47a2980decb5: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:09.2701156Z 70ea44b91986: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:09.4055650Z ce5545f6b7d3: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:11.4970607Z 6a7f953ae30c: Pushed
+Deploy	Build and Push Container	2026-01-11T15:49:12.3492339Z 26d832bf807226ef6a3465d1fd5fb3e211c49593: digest: sha256:3e8639c37a540ab439e63df4093070f1bf820182d82538367868902e5ef034d3 size: 2205
+Deploy	Deploy to Cloud Run	´╗┐2026-01-11T15:49:12.3642467Z ##[group]Run google-github-actions/deploy-cloudrun@v3
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3642891Z with:
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3643161Z   service: boardgame-search-bot
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3643481Z   region: us-central1
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3644178Z   image: us-central1-docker.pkg.dev/***/cloud-run-source-deploy/boardgame-search-bot:26d832bf807226ef6a3465d1fd5fb3e211c49593
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3645569Z   env_vars: WEBHOOK_URL=
+Deploy	Deploy to Cloud Run	TELEGRAM_BOT_TOKEN=***
+Deploy	Deploy to Cloud Run	BGG_API_KEY=***
+Deploy	Deploy to Cloud Run	
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3646331Z   flags: --cpu=1
+Deploy	Deploy to Cloud Run	--memory=512Mi
+Deploy	Deploy to Cloud Run	--min-instances=0
+Deploy	Deploy to Cloud Run	--max-instances=5
+Deploy	Deploy to Cloud Run	--concurrency=80
+Deploy	Deploy to Cloud Run	--timeout=60s
+Deploy	Deploy to Cloud Run	--cpu-boost
+Deploy	Deploy to Cloud Run	--allow-unauthenticated
+Deploy	Deploy to Cloud Run	
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3646991Z   env_vars_update_strategy: merge
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3647320Z   secrets_update_strategy: merge
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3647639Z   skip_default_labels: false
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3647944Z   no_traffic: false
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3648208Z   wait: false
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3648456Z env:
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3648730Z   PROJECT_ID: ***
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3649012Z   SERVICE_NAME: boardgame-search-bot
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3649364Z   REGION: us-central1
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3650066Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3651195Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3652234Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3652934Z   CLOUDSDK_CORE_PROJECT: ***
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3653268Z   CLOUDSDK_PROJECT: ***
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3653572Z   GCLOUD_PROJECT: ***
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3653873Z   GCP_PROJECT: ***
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3654169Z   GOOGLE_CLOUD_PROJECT: ***
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3654542Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3654995Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:12.3655586Z ##[endgroup]
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:13.5637334Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/af34eb55-15b6-4412-b12f-89abd63dc3ef -f /home/runner/work/_temp/62918471-63c4-4188-aa06-bffac9eb31ed
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:21.2336979Z Successfully authenticated
+Deploy	Deploy to Cloud Run	2026-01-11T15:49:21.2340216Z Running: gcloud run deploy boardgame-search-bot --image us-central1-docker.pkg.dev/***/cloud-run-source-deploy/boardgame-search-bot:26d832bf807226ef6a3465d1fd5fb3e211c49593 --update-env-vars ^,^WEBHOOK_URL=,TELEGRAM_BOT_TOKEN=***,BGG_API_KEY=*** --update-labels ^,^managed-by=github-actions,commit-sha=26d832bf807226ef6a3465d1fd5fb3e211c49593 --format json --region us-central1 --cpu 1 --memory 512Mi --min-instances 0 --max-instances 5 --concurrency 80 --timeout 60s --cpu-boost --allow-unauthenticated
+Deploy	Deploy to Cloud Run	2026-01-11T15:54:27.0811230Z ##[error]google-github-actions/deploy-cloudrun failed with: failed to deploy: Deploying container to Cloud Run service [boardgame-search-bot] in project [***] region [us-central1]
+Deploy	Deploy to Cloud Run	Deploying new service...
+Deploy	Deploy to Cloud Run	Setting IAM Policy...........done
+Deploy	Deploy to Cloud Run	Creating Revision...................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................failed
+Deploy	Deploy to Cloud Run	Deployment failed
+Deploy	Deploy to Cloud Run	ERROR: (gcloud.run.deploy) The user-provided container failed to start and listen on the port defined provided by the PORT=8080 environment variable within the allocated timeout. This can happen when the container port is misconfigured or if the timeout is too short. The health check timeout can be extended. Logs for this revision might contain more information.
+Deploy	Deploy to Cloud Run	
+Deploy	Deploy to Cloud Run	Logs URL: https://console.cloud.google.com/logs/viewer?project=***&resource=cloud_run_revision/service_name/boardgame-search-bot/revision_name/boardgame-search-bot-00001-l22&advancedFilter=resource.type%3D%22cloud_run_revision%22%0Aresource.labels.service_name%3D%22boardgame-search-bot%22%0Aresource.labels.revision_name%3D%22boardgame-search-bot-00001-l22%22 
+Deploy	Deploy to Cloud Run	For more troubleshooting guidance, see https://cloud.google.com/run/d
+Deploy	Post Google Auth	´╗┐2026-01-11T15:54:27.0944301Z Post job cleanup.
+Deploy	Post Google Auth	2026-01-11T15:54:27.1756555Z Removed exported credentials at "/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/gha-creds-6436625ec4685df4.json".
+Deploy	Post Checkout	´╗┐2026-01-11T15:54:27.1869270Z Post job cleanup.
+Deploy	Post Checkout	2026-01-11T15:54:27.2632911Z [command]/usr/bin/git version
+Deploy	Post Checkout	2026-01-11T15:54:27.2668740Z git version 2.52.0
+Deploy	Post Checkout	2026-01-11T15:54:27.2705984Z Temporarily overriding HOME='/home/runner/work/_temp/8118822b-142a-4e66-88a0-ccdb9bda0edf' before making global git config changes
+Deploy	Post Checkout	2026-01-11T15:54:27.2707511Z Adding repository directory to the temporary git global config as a safe directory
+Deploy	Post Checkout	2026-01-11T15:54:27.2712431Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot
+Deploy	Post Checkout	2026-01-11T15:54:27.2742330Z Removing SSH command configuration
+Deploy	Post Checkout	2026-01-11T15:54:27.2748852Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Deploy	Post Checkout	2026-01-11T15:54:27.2783459Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Deploy	Post Checkout	2026-01-11T15:54:27.3041864Z Removing HTTP extra header
+Deploy	Post Checkout	2026-01-11T15:54:27.3047696Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Deploy	Post Checkout	2026-01-11T15:54:27.3080128Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Deploy	Post Checkout	2026-01-11T15:54:27.3297740Z Removing includeIf entries pointing to credentials config files
+Deploy	Post Checkout	2026-01-11T15:54:27.3303723Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Deploy	Post Checkout	2026-01-11T15:54:27.3325599Z includeif.gitdir:/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git.path
+Deploy	Post Checkout	2026-01-11T15:54:27.3327005Z includeif.gitdir:/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git/worktrees/*.path
+Deploy	Post Checkout	2026-01-11T15:54:27.3328251Z includeif.gitdir:/github/workspace/.git.path
+Deploy	Post Checkout	2026-01-11T15:54:27.3329056Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Deploy	Post Checkout	2026-01-11T15:54:27.3336236Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git.path
+Deploy	Post Checkout	2026-01-11T15:54:27.3357058Z /home/runner/work/_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Post Checkout	2026-01-11T15:54:27.3368032Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git.path /home/runner/work/_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Post Checkout	2026-01-11T15:54:27.3400775Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git/worktrees/*.path
+Deploy	Post Checkout	2026-01-11T15:54:27.3421953Z /home/runner/work/_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Post Checkout	2026-01-11T15:54:27.3431988Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/boardgame-search-telegram-bot/boardgame-search-telegram-bot/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Post Checkout	2026-01-11T15:54:27.3463122Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Deploy	Post Checkout	2026-01-11T15:54:27.3483408Z /github/runner_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Post Checkout	2026-01-11T15:54:27.3491081Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Post Checkout	2026-01-11T15:54:27.3521035Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Deploy	Post Checkout	2026-01-11T15:54:27.3540764Z /github/runner_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Post Checkout	2026-01-11T15:54:27.3550577Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config
+Deploy	Post Checkout	2026-01-11T15:54:27.3582781Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Deploy	Post Checkout	2026-01-11T15:54:27.3808610Z Removing credentials config '/home/runner/work/_temp/git-credentials-c348461d-7d91-4e8b-bf20-98361248cc54.config'
+Deploy	Complete job	´╗┐2026-01-11T15:54:27.3961481Z Cleaning up orphan processes

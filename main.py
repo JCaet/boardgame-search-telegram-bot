@@ -43,12 +43,16 @@ def main() -> None:
 
     if webhook_url := os.getenv("WEBHOOK_URL"):
         port = int(os.getenv("PORT", "8080"))
+        webhook_secret = os.getenv("WEBHOOK_SECRET")
+        if not webhook_secret:
+            logger.warning("WEBHOOK_SECRET not set - webhook requests will not be verified!")
         logger.info(f"Starting webhook on port {port}...")
         application.run_webhook(
             listen="0.0.0.0",
             port=port,
             url_path=token,
             webhook_url=f"{webhook_url}/{token}",
+            secret_token=webhook_secret,
         )
     else:
         logger.info("Bot started with polling...")
