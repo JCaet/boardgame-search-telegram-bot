@@ -32,5 +32,5 @@ jobs:
       - name: Run semantic-release
         id: semantic
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: semantic-release version --changelog
