@@ -50,6 +50,7 @@ jobs:
           env_vars: |
             WEBHOOK_URL=${{ secrets.WEBHOOK_URL }}
             TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+            BGG_API_KEY=${{ secrets.BGG_API_KEY }}
           flags: |
             --cpu=1
             --memory=512Mi
