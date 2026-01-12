@@ -62,3 +62,8 @@ jobs:
             --timeout=60s
             --cpu-boost
             --allow-unauthenticated
+
+      - name: Sync Bot Configuration
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: uv run scripts/sync_bot_config.py
