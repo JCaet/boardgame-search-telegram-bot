@@ -75,7 +75,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     await update.message.reply_text(
         "Hi! I'm a Board Game Search Bot. Try searching for a game in any chat "
-        "by typing my username followed by the game name!"
+        "by typing my username followed by the game name!\n\n"
+        "Powered by BoardGameGeek"
     )
 
 
@@ -84,10 +85,10 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     if update.message is None:
         return
     await update.message.reply_text(
-        "Se estás a ler isto és maricas\n\n"
         "Usage:\n"
         "• Inline: Type @[bot_username] [game name] in any chat\n"
-        "• Direct: Just send me a game name to search"
+        "• Direct: Just send me a game name to search\n\n"
+        "Powered by BoardGameGeek"
     )
 
 
@@ -120,15 +121,8 @@ async def search_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 f"{i}. <a href='{game['url']}'>{game['name']}</a> ({game['year']})"
             )
 
-        # Add "see more on BGG" link if there are more results
-        if total_count > 10:
-            from urllib.parse import quote
-
-            bgg_search_url = f"https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q={quote(query)}"
-            response_lines.append(
-                f"\n<i>Showing 10 of {total_count} results.</i> "
-                f"<a href='{bgg_search_url}'>See all on BGG →</a>"
-            )
+        # Add attribution
+        response_lines.append("\nPowered by BoardGameGeek")
 
         await update.message.reply_text(
             "\n".join(response_lines),
@@ -180,13 +174,12 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
                     id=str(uuid.uuid4()),
                     title=f"{game['name']} ({game['year']})",
                     input_message_content=InputTextMessageContent(
-                        f"<b>{game['name']} ({game['year']})</b>\n"
-                        f"<a href='{game['url']}'>View on BoardGameGeek</a>",
+                        f"<b>{game['name']} ({game['year']})</b>\nPowered by BoardGameGeek",
                         parse_mode="HTML",
                     ),
                     url=game["url"],
                     thumbnail_url=thumbnail_url,
-                    description="Tap to share this game",
+                    description=f"Rating: {game_details.get('bayesaverage', 'N/A')} - Tap to share",
                 )
             )
 
