@@ -10,7 +10,7 @@ from bgg_client import BGGClient
 class TestBGGClient:
     """Tests for BGGClient class."""
 
-    async def _reset_client(self):
+    async def _reset_client(self) -> None:
         """Reset the singleton client and cache."""
         BGGClient._client = None  # type: ignore
         BGGClient._cache = {}  # type: ignore
@@ -109,7 +109,9 @@ class TestBGGClient:
         # Create 25 IDs (batch size is 20, so 2 chunks)
         ids = [str(i) for i in range(25)]
 
-        def side_effect(*args, **kwargs):
+        from typing import Any
+
+        def side_effect(*args: Any, **kwargs: Any) -> Any:
             # Parse 'id' param to see which IDs were requested
             params = kwargs.get("params", {})
             requested_ids = params.get("id", "").split(",")

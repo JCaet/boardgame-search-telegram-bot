@@ -17,7 +17,7 @@ sys.path.append(os.getcwd())
 from bgg_client import BGGClient  # noqa: E402  # type: ignore
 
 
-async def test_concurrency(concurrency=5):
+async def test_concurrency(concurrency: int = 5) -> bool:
     print(f"Testing with concurrency: {concurrency}")
 
     # Pre-warm the client
@@ -66,7 +66,7 @@ async def test_concurrency(concurrency=5):
     return errors == 0
 
 
-async def main():
+async def main() -> None:
     print("WARNING: This script hits the real BGG API.")
     print("Do not run this too often.")
 
