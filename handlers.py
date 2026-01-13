@@ -76,7 +76,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         "Hi! I'm a Board Game Search Bot. Try searching for a game in any chat "
         "by typing my username followed by the game name!\n\n"
-        "Powered by BoardGameGeek"
+        "Powered by BoardGameGeek\n"
+        "<i>Version: v1.1.2-debug</i>",
+        parse_mode="HTML",
     )
 
 
@@ -108,7 +110,7 @@ async def search_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     logger.info(f"Direct message search for: {query}")
 
     try:
-        results, _, total_count = await _search_games(query, limit=10)
+        results, details_map, total_count = await _search_games(query, limit=10)
 
         if not results:
             await update.message.reply_text(f"No games found for '{query}'.")
@@ -124,8 +126,15 @@ async def search_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         # Add attribution
         response_lines.append("\nPowered by BoardGameGeek")
 
+        # DEBUG: Add thumbnail info to response
+        debug_lines = ["\n🔍 <b>Debug Info:</b>"]
+        for i, game in enumerate(results[:10]):
+            details = details_map.get(game["id"], {})
+            thumb = details.get("thumbnail")
+            debug_lines.append(f"{i + 1}. Thumb: {thumb if thumb else '❌ MISSING'}")
+
         await update.message.reply_text(
-            "\n".join(response_lines),
+            "\n".join(response_lines + debug_lines),
             parse_mode="HTML",
             disable_web_page_preview=True,
         )
@@ -170,19 +179,23 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
             # Prefer high-res image for Telegram thumbnail, fallback to small thumbnail
             thumbnail_url = game_details.get("image") or game_details.get("thumbnail")
 
-            articles.append(
-                InlineQueryResultArticle(
-                    id=str(uuid.uuid4()),
-                    title=f"{game['name']} ({game['year']})",
-                    input_message_content=InputTextMessageContent(
-                        f"<b>{game['name']} ({game['year']})</b>\nPowered by BoardGameGeek",
-                        parse_mode="HTML",
-                    ),
-                    url=game["url"],
-                    thumbnail_url=thumbnail_url,
-                    description=f"Rating: {game_details.get('bayesaverage', 'N/A')} - Tap to share",
-                )
-            )
+            # Build article parameters
+            article_params = {
+                "id": str(uuid.uuid4()),
+                "title": f"{game['name']} ({game['year']})",
+                "input_message_content": InputTextMessageContent(
+                    f"<b>{game['name']} ({game['year']})</b>\nPowered by BoardGameGeek",
+                    parse_mode="HTML",
+                ),
+                "url": game["url"],
+                "description": f"Rating: {game_details.get('bayesaverage', 'N/A')} - Tap to share",
+            }
+
+            # Only include thumbnail_url if it exists
+            if thumbnail_url:
+                article_params["thumbnail_url"] = thumbnail_url
+
+            articles.append(InlineQueryResultArticle(**article_params))
 
         await update.inline_query.answer(articles, cache_time=300)
     except Exception as e:
