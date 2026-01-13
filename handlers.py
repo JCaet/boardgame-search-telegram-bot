@@ -184,10 +184,10 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
                 "id": str(uuid.uuid4()),
                 "title": f"{game['name']} ({game['year']})",
                 "input_message_content": InputTextMessageContent(
-                    f"<b>{game['name']} ({game['year']})</b>\nPowered by BoardGameGeek",
+                    f"<a href='{game['url']}'><b>{game['name']} ({game['year']})</b></a>\n"
+                    "Powered by BoardGameGeek",
                     parse_mode="HTML",
                 ),
-                "url": game["url"],
                 "description": f"Rating: {game_details.get('bayesaverage', 'N/A')} - Tap to share",
             }
 
