@@ -179,23 +179,19 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
             # Prefer high-res image for Telegram thumbnail, fallback to small thumbnail
             thumbnail_url = game_details.get("image") or game_details.get("thumbnail")
 
-            # Build article parameters
-            article_params = {
-                "id": str(uuid.uuid4()),
-                "title": f"{game['name']} ({game['year']})",
-                "input_message_content": InputTextMessageContent(
-                    f"<b>{game['name']} ({game['year']})</b>\nPowered by BoardGameGeek",
-                    parse_mode="HTML",
-                ),
-                "url": game["url"],
-                "description": f"Rating: {game_details.get('bayesaverage', 'N/A')} - Tap to share",
-            }
-
-            # Only include thumbnail_url if it exists
-            if thumbnail_url:
-                article_params["thumbnail_url"] = thumbnail_url
-
-            articles.append(InlineQueryResultArticle(**article_params))
+            articles.append(
+                InlineQueryResultArticle(
+                    id=str(uuid.uuid4()),
+                    title=f"{game['name']} ({game['year']})",
+                    input_message_content=InputTextMessageContent(
+                        f"<a href='{game['url']}'><b>{game['name']} ({game['year']})</b></a>\n"
+                        "Powered by BoardGameGeek",
+                        parse_mode="HTML",
+                    ),
+                    description=f"Rating: {game_details.get('bayesaverage', 'N/A')} - Tap to share",
+                    thumbnail_url=thumbnail_url,
+                )
+            )
 
         await update.inline_query.answer(articles, cache_time=300)
     except Exception as e:
