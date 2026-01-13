@@ -12,10 +12,10 @@ load_dotenv()
 class BGGClient:
     BASE_URL = "https://boardgamegeek.com/xmlapi2"
     API_KEY = os.getenv("BGG_API_KEY")
-    
+
     # Connection pooling: Shared client instance
     _client: httpx.AsyncClient | None = None
-    
+
     # Caching: Simple in-memory cache {query: (results, timestamp)}
     _cache: dict[str, tuple[list[dict], float]] = {}
     CACHE_TTL = 3600  # 1 hour
@@ -25,8 +25,7 @@ class BGGClient:
         """Get or create the shared HTTP client."""
         if cls._client is None or cls._client.is_closed:
             cls._client = httpx.AsyncClient(
-                timeout=10.0,
-                limits=httpx.Limits(max_keepalive_connections=20, max_connections=20)
+                timeout=10.0, limits=httpx.Limits(max_keepalive_connections=20, max_connections=20)
             )
         return cls._client
 
@@ -48,7 +47,7 @@ class BGGClient:
 
         params = {"query": query, "type": "boardgame"}
         client = await cls.get_client()
-        
+
         response = await client.get(
             f"{cls.BASE_URL}/search",
             params=params,
@@ -73,7 +72,7 @@ class BGGClient:
                     "url": f"https://boardgamegeek.com/boardgame/{game_id}",
                 }
             )
-            
+
         # Update cache
         cls._cache[query] = (games, time.time())
         return games
@@ -85,26 +84,30 @@ class BGGClient:
         return details.get(game_id)
 
     @classmethod
-    async def get_games_details(cls, game_ids: list[str]) -> dict[str, dict[str, str | float | None]]:
+    async def get_games_details(
+        cls, game_ids: list[str]
+    ) -> dict[str, dict[str, str | float | None]]:
         """Fetch thumbnail and other details for multiple games at once."""
         if not game_ids:
             return {}
 
         results: dict[str, dict[str, str | float | None]] = {}
         client = await cls.get_client()
-        
+
         # BGG API has a limit on IDs per request, batch into chunks
         batch_size = 20
         tasks = []
         for i in range(0, len(game_ids), batch_size):
             batch_ids = game_ids[i : i + batch_size]
             params: dict[str, str | int] = {"id": ",".join(batch_ids), "stats": 1}
-            
-            tasks.append(client.get(
-                f"{cls.BASE_URL}/thing",
-                params=params,
-                headers=cls._get_headers(),
-            ))
+
+            tasks.append(
+                client.get(
+                    f"{cls.BASE_URL}/thing",
+                    params=params,
+                    headers=cls._get_headers(),
+                )
+            )
 
         # Run requests in parallel
         # Note: BGG limits rate, but 2-3 parallel requests (40-60 items) is usually safe
