@@ -176,7 +176,8 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         articles = []
         for game in results:
             game_details = details_map.get(game["id"], {})
-            thumbnail_url = game_details.get("thumbnail")
+            # Prefer high-res image for Telegram thumbnail, fallback to small thumbnail
+            thumbnail_url = game_details.get("image") or game_details.get("thumbnail")
 
             # Build article parameters
             article_params = {
