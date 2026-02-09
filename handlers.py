@@ -77,7 +77,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Hi! I'm a Board Game Search Bot. Try searching for a game in any chat "
         "by typing my username followed by the game name!\n\n"
         "Powered by BoardGameGeek\n"
-        "<i>Version: v1.1.2-debug</i>",
+        "<i>Version: v1.1.2</i>",
         parse_mode="HTML",
     )
 
@@ -126,15 +126,8 @@ async def search_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         # Add attribution
         response_lines.append("\nPowered by BoardGameGeek")
 
-        # DEBUG: Add thumbnail info to response
-        debug_lines = ["\n🔍 <b>Debug Info:</b>"]
-        for i, game in enumerate(results[:10]):
-            details = details_map.get(game["id"], {})
-            thumb = details.get("thumbnail")
-            debug_lines.append(f"{i + 1}. Thumb: {thumb if thumb else '❌ MISSING'}")
-
         await update.message.reply_text(
-            "\n".join(response_lines + debug_lines),
+            "\n".join(response_lines),
             parse_mode="HTML",
             disable_web_page_preview=True,
         )
