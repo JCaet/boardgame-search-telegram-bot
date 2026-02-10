@@ -38,7 +38,6 @@ jobs:
       - name: Build and Push Container
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
-          uv lock
           docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$SERVICE_NAME:${{ github.sha }} .
           docker push us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$SERVICE_NAME:${{ github.sha }}
 
@@ -55,13 +54,25 @@ jobs:
             BGG_API_KEY=${{ secrets.BGG_API_KEY }}
           flags: |
             --cpu=1
-            --memory=512Mi
+            --memory=256Mi
             --min-instances=0
-            --max-instances=5
+            --max-instances=3
             --concurrency=80
-            --timeout=60s
+            --timeout=30s
             --cpu-boost
             --allow-unauthenticated
+
+      - name: Clean up old container images
+        run: |
+          gcloud artifacts docker images list \
+            us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$SERVICE_NAME \
+            --sort-by="~UPDATE_TIME" \
+            --format="get(DIGEST)" \
+            --limit=999 | tail -n +2 | while read -r digest; do
+              gcloud artifacts docker images delete \
+                us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$SERVICE_NAME@$digest \
+                --quiet --delete-tags
+          done
 
       - name: Sync Bot Configuration
         env:
