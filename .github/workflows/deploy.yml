@@ -62,10 +62,10 @@ jobs:
             BGG_API_KEY=${{ secrets.BGG_API_KEY }}
           flags: |
             --cpu=1
-            --memory=256Mi
+            --memory=512Mi
             --min-instances=0
             --max-instances=3
-            --concurrency=80
+            --concurrency=40
             --timeout=30s
             --cpu-boost
             --allow-unauthenticated
