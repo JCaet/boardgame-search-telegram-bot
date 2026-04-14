@@ -1,6 +1,6 @@
 [project]
 name = "boardgame-search-telegram-bot"
-version = "1.2.0"
+version = "1.2.1"
 description = "Telegram bot to search for games on BoardGameGeek and quickly link to them"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -60,7 +60,7 @@ ignore_missing_imports = true
 dev = [
     "mypy>=1.19.1",
     "pre-commit>=4.5.1",
-    "pytest>=9.0.2",
+    "pytest>=9.0.3",
     "pytest-asyncio>=0.24.0",
     "pytest-cov>=7.0.0",
     "ruff>=0.14.10",
