@@ -1,7 +1,12 @@
 name: Deploy to Cloud Run
 
 on:
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      sync_secrets:
+        description: 'Sync GitHub secret values to Secret Manager before deploying'
+        type: boolean
+        default: false
   workflow_run:
     workflows: ["Release"]
     types:
@@ -49,6 +54,31 @@ jobs:
           docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$SERVICE_NAME:${{ github.sha }} .
           docker push us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/$SERVICE_NAME:${{ github.sha }}
 
+      - name: Sync secrets to Secret Manager
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.sync_secrets }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          BGG_API_KEY: ${{ secrets.BGG_API_KEY }}
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+        run: |
+          set -euo pipefail
+          sync_secret() {
+            local name="$1"
+            local value="$2"
+            local prev
+            prev=$(gcloud secrets versions list "$name" --project="$PROJECT_ID" \
+              --filter="state=ENABLED" --format="value(name)" --sort-by="~createTime")
+            printf '%s' "$value" | gcloud secrets versions add "$name" \
+              --project="$PROJECT_ID" --data-file=-
+            for v in $prev; do
+              gcloud secrets versions destroy "$v" --secret="$name" \
+                --project="$PROJECT_ID" --quiet || true
+            done
+          }
+          sync_secret bgg-bot-telegram-token "$TELEGRAM_BOT_TOKEN"
+          sync_secret bgg-bot-bgg-api-key "$BGG_API_KEY"
+          sync_secret bgg-bot-webhook-secret "$WEBHOOK_SECRET"
+
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v3
         with:
@@ -57,9 +87,10 @@ jobs:
           image: us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/${{ env.SERVICE_NAME }}:${{ github.sha }}
           env_vars: |
             WEBHOOK_URL=${{ secrets.WEBHOOK_URL }}
-            WEBHOOK_SECRET=${{ secrets.WEBHOOK_SECRET }}
-            TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
-            BGG_API_KEY=${{ secrets.BGG_API_KEY }}
+          secrets: |
+            TELEGRAM_BOT_TOKEN=bgg-bot-telegram-token:latest
+            BGG_API_KEY=bgg-bot-bgg-api-key:latest
+            WEBHOOK_SECRET=bgg-bot-webhook-secret:latest
           flags: |
             --cpu=1
             --memory=256Mi
