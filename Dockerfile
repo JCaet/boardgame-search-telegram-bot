@@ -14,5 +14,6 @@ RUN uv sync --frozen --no-dev
 # Copy application code
 COPY *.py ./
 
-# Run the bot
-CMD ["uv", "run", "main.py"]
+# Run the bot directly via the venv's python (avoids keeping uv resident)
+ENV PATH="/app/.venv/bin:$PATH"
+CMD ["python", "main.py"]
