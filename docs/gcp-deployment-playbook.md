@@ -41,7 +41,9 @@ Per-repo, a dedicated deploy service account gives isolated blast radius.
 2. **Grant deploy roles**:
    - `roles/run.admin` — deploy Cloud Run services
    - `roles/iam.serviceAccountUser` on the Cloud Run runtime SA
-   - `roles/artifactregistry.writer` — push images
+   - `roles/artifactregistry.repoAdmin` — push **and** delete old images
+     (the deploy workflow cleans up prior image versions post-deploy;
+     `roles/artifactregistry.writer` alone lacks `versions.delete`)
    - `roles/cloudsql.client` — only if the repo uses Cloud SQL
 
 3. **Create the WIF pool and OIDC provider** (once per GCP project):
@@ -154,16 +156,30 @@ jobs:
       # ... WIF auth, docker login ...
 
       - name: Sync secrets to Secret Manager
-        if: ${{ inputs.sync_secrets == true }}
+        # Guard on event_name too — workflow_run-triggered deploys don't have
+        # `inputs` at all, and we never want them to re-sync.
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.sync_secrets }}
+        env:
+          # Pass secrets via env: (not direct interpolation inside run:) so
+          # shell metacharacters in values can't break the script.
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
         run: |
+          set -euo pipefail
           sync_secret() {
             local id="$1" val="$2"
-            printf '%s' "$val" | gcloud secrets versions add "$id" --data-file=-
-            gcloud secrets versions list "$id" --format="value(name)" --filter="state=ENABLED" \
-              | tail -n +2 \
-              | xargs -r -I{} gcloud secrets versions destroy {} --secret="$id" --quiet
+            local prev
+            prev=$(gcloud secrets versions list "$id" --project="$PROJECT_ID" \
+              --filter="state=ENABLED" --format="value(name)" --sort-by="~createTime")
+            printf '%s' "$val" | gcloud secrets versions add "$id" \
+              --project="$PROJECT_ID" --data-file=-
+            for v in $prev; do
+              gcloud secrets versions destroy "$v" --secret="$id" \
+                --project="$PROJECT_ID" --quiet || true
+            done
           }
-          sync_secret "<prefix>-telegram-token" "${{ secrets.TELEGRAM_BOT_TOKEN }}"
+          sync_secret "<prefix>-telegram-token" "$TELEGRAM_BOT_TOKEN"
+          sync_secret "<prefix>-webhook-secret" "$WEBHOOK_SECRET"
           # ... one per secret ...
 ```
 
