@@ -10,7 +10,11 @@ load_dotenv()
 
 
 class BGGClient:
+    # BGG XML API2 — terms of use: https://boardgamegeek.com/xmlapi/termsofuse
     BASE_URL = "https://boardgamegeek.com/xmlapi2"
+    USER_AGENT = (
+        "BoardGameSearchTelegramBot (+https://github.com/JCaet/boardgame-search-telegram-bot)"
+    )
     API_KEY = os.getenv("BGG_API_KEY")
 
     # Connection pooling: Shared client instance
@@ -31,7 +35,7 @@ class BGGClient:
 
     @staticmethod
     def _get_headers() -> dict[str, str]:
-        headers: dict[str, str] = {}
+        headers: dict[str, str] = {"User-Agent": BGGClient.USER_AGENT}
         if BGGClient.API_KEY:
             headers["Authorization"] = f"Bearer {BGGClient.API_KEY}"
         return headers
