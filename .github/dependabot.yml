@@ -1,13 +1,17 @@
 version: 2
 updates:
-  # Note: Dependabot uses "pip" ecosystem for Python, which works with uv projects
-  # since pyproject.toml dependency format is compatible
-  - package-ecosystem: "pip"
+  - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "weekly"
     commit-message:
       prefix: "chore(deps)"
+      include: "scope"
+    groups:
+      python-minor-patch:
+        update-types: ["minor", "patch"]
+      python-dev:
+        dependency-type: "development"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -15,3 +19,7 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "chore(deps)"
+      include: "scope"
+    groups:
+      actions-minor-patch:
+        update-types: ["minor", "patch"]
