@@ -13,7 +13,7 @@ dependencies = [
     "lxml>=6.1.0",
     "python-dotenv>=1.2.2",
     "python-telegram-bot>=22.7",
-    "tornado>=6.5.4",
+    "tornado>=6.5.6",
 ]
 
 [tool.semantic_release]
