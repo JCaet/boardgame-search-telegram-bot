@@ -21,6 +21,8 @@ version_toml = ["pyproject.toml:project.version"]
 branch = "main"
 upload_to_release = true
 commit_message = "{version} [skip ci]"
+build_command = "uv lock"
+assets = ["uv.lock"]
 
 [tool.semantic_release.changelog]
 exclude_commit_patterns = []
